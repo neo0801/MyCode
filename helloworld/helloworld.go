@@ -6,6 +6,7 @@ const prefixWordInEnglish = "Hello, "
 const prefixWordInChinese = "你好, "
 const prefixWordInSpanish = "Hola, "
 
+// GetDefaultName returns default name according to language string
 func GetDefaultName(language string) string {
 	name := "World"
 	switch language {
