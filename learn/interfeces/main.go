@@ -16,6 +16,6 @@ func download(r Retriever) string {
 }
 
 func main() {
-	r := retriever.Retriever{"fake news!"}
+	r := retriever.Retriever{Contents: "fake news!"}
 	fmt.Println(r.Get("华尔街日报"))
 }
