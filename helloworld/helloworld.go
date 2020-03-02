@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"reflect"
+	"fmt"
+)
 
 const prefixWordInEnglish = "Hello, "
 const prefixWordInChinese = "你好, "
@@ -39,5 +42,7 @@ func Hello(name, languange string) string {
 }
 
 func main() {
+	const pp = 3.1415
+	fmt.Println(reflect.TypeOf(pp))
 	fmt.Println(Hello("", ""))
 }
