@@ -1,4 +1,4 @@
-package main
+package fib
 
 import (
 	"bufio"
@@ -7,7 +7,8 @@ import (
 	"strings"
 )
 
-func fibonacci() fibGen {
+// Fibonacci generates fibonacci
+func Fibonacci() fibGen {
 	a, b := 0, 1
 	return func() int {
 		a, b = b, a+b
@@ -32,9 +33,4 @@ func printIObuffer(reader io.Reader) {
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
-}
-
-func main() {
-	f := fibonacci()
-	printIObuffer(f)
 }
