@@ -29,7 +29,7 @@ func (node *Node) Traverse() {
 	node.Right.Traverse()
 }
 
-// TraverseFunc travels a node and apply a function f
+// TraverseFunc travels from a node with lnr and apply a function f
 func (node *Node) TraverseFunc(f func(*Node)) {
 	if node == nil {
 		return
@@ -38,4 +38,16 @@ func (node *Node) TraverseFunc(f func(*Node)) {
 	node.Left.TraverseFunc(f)
 	f(node)
 	node.Right.TraverseFunc(f)
+}
+
+// TraverseWithChannel travels from a node with lnr and apply a function f
+func (node *Node) TraverseWithChannel() chan *Node {
+	out := make(chan *Node)
+	go func() {
+		node.TraverseFunc(func(node *Node) {
+			out <- node
+		})
+		close(out)
+	}()
+	return out
 }

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/neo0801/MyCode/learn/queue"
+	queue "github.com/neo0801/MyCode/learn/queue"
 	"golang.org/x/tools/container/intsets"
 )
 
