@@ -2,3 +2,4 @@ helloworld/helloworld.exe
 .mypy_cache
 .vscode
 .idea
+data
