@@ -19,20 +19,45 @@ func generator() chan int {
 	return out
 }
 
+func worker(id int, c chan int) {
+	for n := range c {
+		time.Sleep(time.Second)
+		fmt.Printf("Worker %d recieved %d.\n", id, n)
+	}
+}
+
+func createWorker(id int) chan int {
+	c := make(chan int)
+	go worker(id, c)
+	return c
+}
+
 func main() {
-	c1, c2, n := generator(), generator(), 0
+	c1, c2, worker := generator(), generator(), createWorker(0)
+	values := []int{}
+	tm := time.After(time.Minute)
+	tick := time.Tick(time.Second)
 	for {
-		select {
-		case n = <-c1:
-			fmt.Println("Recieved from channel c1:", n)
-		case n = <-c2:
-			fmt.Println("Recieved from channel c2:", n)
+		var activeWorker chan int
+		var activeValue int
+		if len(values) > 0 {
+			activeWorker = worker
+			activeValue = values[0]
 		}
-		if n > 10 {
-			fmt.Println("Done!")
-			break
-		} else {
-			fmt.Println("continue with n:", n)
+		select {
+		case n := <-c1:
+			values = append(values, n)
+		case n := <-c2:
+			values = append(values, n)
+		case activeWorker <- activeValue:
+			values = values[1:]
+		case <-tm:
+			fmt.Println("Bye!")
+			return
+		case <-time.After(500 * time.Millisecond):
+			fmt.Println("Time out.")
+		case <-tick:
+			fmt.Println("Array len:", len(values))
 		}
 	}
 }
